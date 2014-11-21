@@ -28,8 +28,8 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function () {
     this.sprite = 'images/char-boy.png';
-    this.x = 250; // canvas.width/2
-    this.y = 500; // canvas.height-100;
+    this.x = 202; // canvas.width/2
+    this.y = 606-202; // canvas.height-100;
 }
 
 Player.prototype.update = function(dt) {
@@ -38,21 +38,28 @@ Player.prototype.update = function(dt) {
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    // for test purposes draw coordinates
+    ctx.fillStyle = 'white';
+    ctx.fillText('x: '+ this.x + ' - y: ' + this.y, this.x, this.y+83);
 }
 
 Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
-            this.x = this.x - 50;
+            if (this.x > 0)
+                this.x = this.x - 101;
             break;
         case 'up':
-            this.y = this.y - 50;
+            if (this.y > -11)
+                this.y = this.y - 83;
             break;
         case 'right':
-            this.x = this.x + 50;
+            if (this.x < 404)
+                this.x = this.x + 101;
             break;
         case 'down':
-            this.y = this.y + 50;
+            if (this.y < 404)
+                this.y = this.y + 83;
             break;
     }
 }
