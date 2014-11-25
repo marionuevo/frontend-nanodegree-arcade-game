@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -95,6 +95,22 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+    }
+
+    /* I will try to check collisions here
+    *  Let's see if this is the right place
+    */
+
+    function checkCollisions() {
+         for (enemy in allEnemies) {
+            if (Math.abs((allEnemies[enemy].x - player.x)) < 80 && 
+                Math.abs((allEnemies[enemy].y - player.y)) < 20) {
+                // crash
+                console.log (player.x + ' - ' + player.y);
+                console.log (allEnemies[enemy].x + ' ' + allEnemies[enemy].y)
+                player.init();
+            }
+         }
     }
 
     /* This function initially draws the "game level", it will then call
