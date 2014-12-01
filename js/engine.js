@@ -55,7 +55,7 @@ var Engine = (function(global) {
 
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
-         */
+         */ 
         win.requestAnimationFrame(main);
     };
 
@@ -105,7 +105,7 @@ var Engine = (function(global) {
             if (Math.abs((allEnemies[enemy].x - player.x)) < 80 && 
                 Math.abs((allEnemies[enemy].y - player.y)) < 20) {
                 // crash
-                player.init();
+                reset();
             }
          }
     }
@@ -148,9 +148,8 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
-
         renderEntities();
+        renderTexts();
     }
 
     /* This function is called by the render function and is called on each game
@@ -167,11 +166,24 @@ var Engine = (function(global) {
         player.render();
     }
 
+    function renderTexts() {
+        if (gameOver) {
+            ctx.font = '50px Impact';
+            ctx.textAlign = 'center';
+            ctx.fillText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
+        } 
+    }
+
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
+        gameOver = true;
+        setTimeout(function () {
+            gameOver = false;
+        }, 2000);
+        player.init();
         // noop
     }
 

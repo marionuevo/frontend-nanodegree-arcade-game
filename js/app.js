@@ -1,9 +1,10 @@
-// Constants definition
+// Constants definition as global scope variables
 MINSPEED = 100;
 MAXSPEED = 300;
 CANVASWIDTH = 505;
 CANVASHEIGTH = 606;
 
+var gameOver = false;
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -33,6 +34,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + this.speed * dt;
+    // check if enemy go beyond the canvas right limit
     if (this.x > CANVASWIDTH) {
         this.init();
     }
@@ -54,7 +56,7 @@ var Player = function () {
 Player.prototype.update = function() {
     // check if player felt into the water
     if (this.y < 72) {
-        this.init();
+        reset();
     }
 }
 
@@ -66,10 +68,12 @@ Player.prototype.init = function() {
 
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    // for test purposes draw coordinates
-    ctx.fillStyle = 'white';
-    ctx.fillText('x: '+ this.x + ' - y: ' + this.y, this.x, this.y+83);
+     if (!gameOver) {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        // for test purposes draw coordinates
+        // ctx.fillStyle = 'white';
+        // ctx.fillText('x: '+ this.x + ' - y: ' + this.y, this.x, this.y+83);
+    }
 }
 
 Player.prototype.handleInput = function(key) {
@@ -96,10 +100,8 @@ Player.prototype.handleInput = function(key) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
 var player = new Player();
 var allEnemies = [new Enemy(), new Enemy(), new Enemy()];
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -110,5 +112,7 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-    player.handleInput(allowedKeys[e.keyCode]);
+    if (!gameOver) {
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
 });
