@@ -4,7 +4,8 @@ MAXSPEED = 300;
 CANVASWIDTH = 505;
 CANVASHEIGTH = 606;
 
-var gameOver = false;
+// gameState is 0 on GAME OVER, 1 on READY and 2 on running.
+var gameState = 1;
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -54,10 +55,7 @@ var Player = function () {
 }
 
 Player.prototype.update = function() {
-    // check if player felt into the water
-    if (this.y < 72) {
-        reset();
-    }
+    
 }
 
 // Gives player initial coordinates
@@ -68,7 +66,7 @@ Player.prototype.init = function() {
 
 
 Player.prototype.render = function() {
-     if (!gameOver) {
+    if (gameState === 2) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
         // for test purposes draw coordinates
         // ctx.fillStyle = 'white';
@@ -112,7 +110,7 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-    if (!gameOver) {
+    if (gameState === 2) {
         player.handleInput(allowedKeys[e.keyCode]);
     }
 });

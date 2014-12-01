@@ -29,6 +29,12 @@ var Engine = (function(global) {
     canvas.height = CANVASHEIGTH;
     doc.body.appendChild(canvas);
 
+    ctx.font = '50px Impact';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'black';
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 3;
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -98,16 +104,22 @@ var Engine = (function(global) {
     }
 
     /* This is used to check collision between the player and all the
-     * enemies. If true, call player.init().
+     * enemies, and to check if player felt into the water.
+     * If true, call reset().
      */
     function checkCollisions() {
-         for (enemy in allEnemies) {
+        // check if player felt into the water
+        if (player.y < 72) {
+            reset();
+        }
+
+        for (enemy in allEnemies) {
             if (Math.abs((allEnemies[enemy].x - player.x)) < 80 && 
                 Math.abs((allEnemies[enemy].y - player.y)) < 20) {
                 // crash
                 reset();
             }
-         }
+        }
     }
 
     /* This function initially draws the "game level", it will then call
@@ -167,11 +179,15 @@ var Engine = (function(global) {
     }
 
     function renderTexts() {
-        if (gameOver) {
-            ctx.font = '50px Impact';
-            ctx.textAlign = 'center';
+        if (gameState === 0) {
+            ctx.strokeText('GAME OVER', CANVASWIDTH/2, CANVASHEIGTH/2);
+            ctx.fillText('GAME OVER', CANVASWIDTH/2, CANVASHEIGTH/2);
+        };
+        if (gameState === 1) {
+            ctx.strokeText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
             ctx.fillText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
-        } 
+        }
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -179,12 +195,18 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        gameOver = true;
-        setTimeout(function () {
-            gameOver = false;
-        }, 2000);
-        player.init();
-        // noop
+        if (gameState === 2) {
+            gameState = 0;
+            setTimeout(function () {
+                gameState = 1;
+            }, 1500);
+        }
+        if (gameState === 1) {
+            setTimeout(function () {
+                gameState = 2;
+            }, 2000);
+            player.init();
+        }
     }
 
     /* Go ahead and load all of the images we know we're going to need to
