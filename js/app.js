@@ -52,9 +52,10 @@ var Player = function () {
 }
 
 Player.prototype.update = function() {
-    // check if player felt to the water
-    
-    // no op !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // check if player felt into the water
+    if (this.y < 72) {
+        this.init();
+    }
 }
 
 Player.prototype.init = function() {
