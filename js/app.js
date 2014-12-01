@@ -58,12 +58,10 @@ Player.prototype.update = function() {
     }
 }
 
+// Gives player initial coordinates
 Player.prototype.init = function() {
-    //console.log(ctx.canvas.width);
     this.x = (CANVASWIDTH - 101)/ 2;
-    //this.x = 404 / 2;
     this.y = CANVASHEIGTH - 101 * 2; // 2 cells
-    //this.y = 606 - 101 * 2; // 2 cells
 }
 
 

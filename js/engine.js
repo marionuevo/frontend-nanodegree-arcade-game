@@ -97,10 +97,9 @@ var Engine = (function(global) {
         player.update(); 
     }
 
-    /* I will try to check collisions here
-     * Let's see if this is the right place
+    /* This is used to check collision between the player and all the
+     * enemies. If true, call player.init().
      */
-
     function checkCollisions() {
          for (enemy in allEnemies) {
             if (Math.abs((allEnemies[enemy].x - player.x)) < 80 && 
