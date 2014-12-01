@@ -25,8 +25,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = CANVASWIDTH;
+    canvas.height = CANVASHEIGTH;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -94,20 +94,18 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        player.update(); 
     }
 
     /* I will try to check collisions here
-    *  Let's see if this is the right place
-    */
+     * Let's see if this is the right place
+     */
 
     function checkCollisions() {
          for (enemy in allEnemies) {
             if (Math.abs((allEnemies[enemy].x - player.x)) < 80 && 
                 Math.abs((allEnemies[enemy].y - player.y)) < 20) {
                 // crash
-                console.log (player.x + ' - ' + player.y);
-                console.log (allEnemies[enemy].x + ' ' + allEnemies[enemy].y)
                 player.init();
             }
          }
@@ -167,7 +165,6 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
         player.render();
     }
 

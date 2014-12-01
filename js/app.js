@@ -1,3 +1,10 @@
+// Constants definition
+MINSPEED = 100;
+MAXSPEED = 300;
+CANVASWIDTH = 505;
+CANVASHEIGTH = 606;
+
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -9,10 +16,14 @@ var Enemy = function() {
     this.init();
 }
 
+// Set initial position values for an enemy
+// x is outside the screen, on the left
+// y gets a random value from 3 possible rows
+// Speed is also variable and random between MINSPEED and MAXSPEED
 Enemy.prototype.init = function() {
     this.x = -101;
-    this.y = 60 + (Math.round(Math.random()* 2) * 83);
-    this.speed = (Math.random()* 300) + 100;
+    this.y = 60 + (Math.round(Math.random() * 2) * 83);
+    this.speed = (Math.random() * MAXSPEED) + MINSPEED;
 }
 
 // Update the enemy's position, required method for game
@@ -22,7 +33,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + this.speed * dt;
-    if (this.x > 505) {
+    if (this.x > CANVASWIDTH) {
         this.init();
     }
 }
@@ -41,14 +52,19 @@ var Player = function () {
 }
 
 Player.prototype.update = function() {
-    // no op
-    ;
+    // check if player felt to the water
+    
+    // no op !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
 Player.prototype.init = function() {
-    this.x = 202; // canvas.width/2
-    this.y = 606-202; // canvas.height-100
+    //console.log(ctx.canvas.width);
+    this.x = (CANVASWIDTH - 101)/ 2;
+    //this.x = 404 / 2;
+    this.y = CANVASHEIGTH - 101 * 2; // 2 cells
+    //this.y = 606 - 101 * 2; // 2 cells
 }
+
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -82,9 +98,8 @@ Player.prototype.handleInput = function(key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var allEnemies = [new Enemy(), new Enemy(), new Enemy()];
-
 var player = new Player();
+var allEnemies = [new Enemy(), new Enemy(), new Enemy()];
 
 
 // This listens for key presses and sends the keys to your
