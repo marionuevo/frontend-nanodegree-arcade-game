@@ -1,6 +1,7 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
-
-for self-checking their submission.
+In order to run the game, no special actions is required.
+Don't change the original file structure, and open index.html with your internet browser.
+You can control the player with cursor keys.
+Avoid the bugs, and don't fall into the water.
