@@ -29,6 +29,7 @@ var Engine = (function(global) {
     canvas.height = CANVASHEIGTH;
     doc.body.appendChild(canvas);
 
+    // Set global font rendering style
     ctx.font = '50px Impact';
     ctx.textAlign = 'center';
     ctx.fillStyle = 'black';
@@ -112,7 +113,7 @@ var Engine = (function(global) {
         if (player.y < 72) {
             reset();
         }
-
+        // check for collisions
         for (enemy in allEnemies) {
             if (Math.abs((allEnemies[enemy].x - player.x)) < 80 && 
                 Math.abs((allEnemies[enemy].y - player.y)) < 20) {
@@ -195,12 +196,14 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
+        // if game is running...
         if (gameState === 2) {
             gameState = 0;
             setTimeout(function () {
                 gameState = 1;
             }, 1500);
         }
+        // if game is ready...
         if (gameState === 1) {
             setTimeout(function () {
                 gameState = 2;

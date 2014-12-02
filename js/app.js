@@ -55,7 +55,7 @@ var Player = function () {
 }
 
 Player.prototype.update = function() {
-    
+    // not used
 }
 
 // Gives player initial coordinates
@@ -64,16 +64,14 @@ Player.prototype.init = function() {
     this.y = CANVASHEIGTH - 101 * 2; // 2 cells
 }
 
-
+// Draw player character
 Player.prototype.render = function() {
     if (gameState === 2) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-        // for test purposes draw coordinates
-        // ctx.fillStyle = 'white';
-        // ctx.fillText('x: '+ this.x + ' - y: ' + this.y, this.x, this.y+83);
     }
 }
 
+// Read keystrokes from keyboard
 Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
