@@ -102,7 +102,7 @@ Player.prototype.handleInput = function(key) {
 // Gem is the object that store gems position. Player must recollect them
 // to get more points.
 var Gem = function ()  {
-    this.sprite = 'images/Gem Blue.png';
+    this.sprite = 'images/Key.png';
     this.init();
 }
 
@@ -111,7 +111,7 @@ var Gem = function ()  {
 Gem.prototype.init = function() {
     this.posx = Math.round(Math.random() * 4 + 1);
     this.posy = Math.round(Math.random() * 2 + 2);
-    this.x = this.posx * 101 - 101 + Math.random() * 5;
+    this.x = this.posx * 101 - 110 + Math.random() * 20;
     this.y = this.posy * 83 - 90;
 }
 
