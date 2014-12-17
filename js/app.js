@@ -24,7 +24,8 @@ var Enemy = function() {
 // Speed is also variable and random between MINSPEED and MAXSPEED
 Enemy.prototype.init = function() {
     this.x = -101;
-    this.y = 60 + (Math.round(Math.random() * 2) * 83);
+    this.posy = Math.round(Math.random() * 2);
+    this.y = this.posy * 83 + 60;
     this.speed = (Math.random() * MAXSPEED) + MINSPEED;
 }
 
@@ -55,13 +56,14 @@ var Player = function () {
 }
 
 Player.prototype.update = function() {
-    // not used
+    this.x = this.posx * 101 - 101;
+    this.y = this.posy * 83 - 92;
 }
 
 // Gives player initial coordinates
 Player.prototype.init = function() {
-    this.x = (CANVASWIDTH - 101)/ 2;
-    this.y = CANVASHEIGTH - 101 * 2; // 2 cells
+    this.posx = 3;
+    this.posy = 6;
 }
 
 // Draw player character
@@ -71,24 +73,24 @@ Player.prototype.render = function() {
     }
 }
 
-// Read keystrokes from keyboard
+// Process keystrokes
 Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
-            if (this.x > 0)
-                this.x = this.x - 101;
+            if (this.posx > 1)
+                this.posx--;
             break;
         case 'up':
-            if (this.y > -11)
-                this.y = this.y - 83;
+            if (this.posy > 1)
+                this.posy--;
             break;
         case 'right':
-            if (this.x < 404)
-                this.x = this.x + 101;
+            if (this.posx < 5)
+                this.posx++;
             break;
         case 'down':
-            if (this.y < 404)
-                this.y = this.y + 83;
+            if (this.posy < 6)
+                this.posy++;
             break;
     }
 }

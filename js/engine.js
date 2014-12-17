@@ -110,7 +110,7 @@ var Engine = (function(global) {
      */
     function checkCollisions() {
         // check if player felt into the water
-        if (player.y < 72) {
+        if (player.posy <= 1) {
             reset();
         }
         // check for collisions
