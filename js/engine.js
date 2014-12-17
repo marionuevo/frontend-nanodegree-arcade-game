@@ -88,6 +88,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        checkCollections();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -123,7 +124,18 @@ var Engine = (function(global) {
         }
     }
 
-    
+    /* This is used to check whether a player find a gem in the tile
+     * where the player arrives. If true, add points to the player
+     */
+    function checkCollections() {
+        allGems.forEach(function(gem) {
+            if (gem.posx === player.posx && gem.posy === player.posy) {
+                //there is a gem here. did you found it sooner?
+                 player.score ++;
+                 gem.init();
+            } 
+        });
+    }
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
@@ -185,6 +197,7 @@ var Engine = (function(global) {
     }
 
     function renderTexts() {
+        // center text for game status
         if (gameState === 0) {
             ctx.strokeText('GAME OVER', CANVASWIDTH/2, CANVASHEIGTH/2);
             ctx.fillText('GAME OVER', CANVASWIDTH/2, CANVASHEIGTH/2);
@@ -193,7 +206,15 @@ var Engine = (function(global) {
             ctx.strokeText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
             ctx.fillText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
         }
-
+        // top text for player score
+        ctx.save();
+        ctx.font = '30px Impact';
+        ctx.textAlign = 'left';
+        ctx.lineWidth = 2;
+        ctx.clearRect(0, 0, 200, 50);
+        ctx.strokeText('Player Score: ' + player.score, 0, 45);
+        ctx.fillText('Player Score: ' + player.score, 0, 45);
+        ctx.restore();
     }
 
     /* This function does nothing but it could have been a good place to

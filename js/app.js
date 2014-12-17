@@ -64,6 +64,7 @@ Player.prototype.update = function() {
 Player.prototype.init = function() {
     this.posx = 3;
     this.posy = 6;
+    this.score = 0;
 }
 
 // Draw player character
