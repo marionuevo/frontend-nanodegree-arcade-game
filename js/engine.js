@@ -123,6 +123,8 @@ var Engine = (function(global) {
         }
     }
 
+    
+
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -173,6 +175,9 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+        allGems.forEach(function(gem) {
+            gem.render();
+        });
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
@@ -209,6 +214,9 @@ var Engine = (function(global) {
                 gameState = 2;
             }, 2000);
             player.init();
+            allGems.forEach(function(gem) {
+                gem.init();
+            });
         }
     }
 
@@ -221,7 +229,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/key.png'
     ]);
     Resources.onReady(init);
 

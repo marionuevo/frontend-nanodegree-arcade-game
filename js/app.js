@@ -25,7 +25,6 @@ var Enemy = function() {
 Enemy.prototype.init = function() {
     this.x = -101;
     this.posy = Math.round(Math.random() * 2 + 2);
-    console.log (this.posy);
     this.y = this.posy * 83 - 106;
     this.speed = (Math.random() * MAXSPEED) + MINSPEED;
 }
@@ -96,11 +95,30 @@ Player.prototype.handleInput = function(key) {
     }
 }
 
+// Gem is the object that store gems position. Player must recollect them
+// to get more points.
+var Gem = function ()  {
+    this.sprite = 'images/key.png';
+    this.init();
+}
+
+Gem.prototype.init = function() {
+    this.posx = Math.round(Math.random() * 4 + 1);
+    this.posy = Math.round(Math.random() * 2 + 2);
+    this.x = this.posx * 101 - 101;
+    this.y = this.posy * 83 - 90;
+}
+
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var player = new Player();
 var allEnemies = [new Enemy(), new Enemy(), new Enemy()];
+var allGems = [new Gem(), new Gem(), new Gem()];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
