@@ -115,8 +115,8 @@ var Engine = (function(global) {
         }
         // check for collisions
         for (enemy in allEnemies) {
-            if (Math.abs((allEnemies[enemy].x - player.x)) < 80 && 
-                Math.abs((allEnemies[enemy].y - player.y)) < 20) {
+            if (allEnemies[enemy].posy === player.posy &&
+                Math.abs((allEnemies[enemy].x - player.x)) < 80) {
                 // crash
                 reset();
             }

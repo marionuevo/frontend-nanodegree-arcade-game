@@ -24,8 +24,9 @@ var Enemy = function() {
 // Speed is also variable and random between MINSPEED and MAXSPEED
 Enemy.prototype.init = function() {
     this.x = -101;
-    this.posy = Math.round(Math.random() * 2);
-    this.y = this.posy * 83 + 60;
+    this.posy = Math.round(Math.random() * 2 + 2);
+    console.log (this.posy);
+    this.y = this.posy * 83 - 106;
     this.speed = (Math.random() * MAXSPEED) + MINSPEED;
 }
 
