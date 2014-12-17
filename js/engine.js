@@ -206,14 +206,17 @@ var Engine = (function(global) {
             ctx.strokeText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
             ctx.fillText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
         }
-        // top text for player score
+        // top text for player score and speed
         ctx.save();
         ctx.font = '30px Impact';
         ctx.textAlign = 'left';
         ctx.lineWidth = 2;
-        ctx.clearRect(0, 0, 200, 50);
+        ctx.clearRect(0, 0, CANVASWIDTH, 50);
         ctx.strokeText('Player Score: ' + player.score, 0, 45);
         ctx.fillText('Player Score: ' + player.score, 0, 45);
+        ctx.textAlign = 'right';
+        ctx.strokeText('Speed: ' + (Math.floor (player.score/10)), CANVASWIDTH, 45);
+        ctx.fillText('Speed: ' + (Math.floor (player.score/10)), CANVASWIDTH, 45);
         ctx.restore();
     }
 
