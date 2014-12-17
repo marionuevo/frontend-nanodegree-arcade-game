@@ -56,12 +56,14 @@ var Player = function () {
     this.init();
 }
 
+// Converts player discrete grid position to 
+// screen coordinates "analog" position
 Player.prototype.update = function() {
     this.x = this.posx * 101 - 101;
     this.y = this.posy * 83 - 92;
 }
 
-// Gives player initial coordinates
+// Gives player initial coordinates and score
 Player.prototype.init = function() {
     this.posx = 3;
     this.posy = 6;
@@ -100,14 +102,16 @@ Player.prototype.handleInput = function(key) {
 // Gem is the object that store gems position. Player must recollect them
 // to get more points.
 var Gem = function ()  {
-    this.sprite = 'images/key.png';
+    this.sprite = 'images/star.png';
     this.init();
 }
 
+// Give gems inital position plus a random offset in x
+// This offset allow to see where there are two or more gems
 Gem.prototype.init = function() {
     this.posx = Math.round(Math.random() * 4 + 1);
     this.posy = Math.round(Math.random() * 2 + 2);
-    this.x = this.posx * 101 - 101;
+    this.x = this.posx * 101 - 101 + Math.random() * 5;
     this.y = this.posy * 83 - 90;
 }
 
