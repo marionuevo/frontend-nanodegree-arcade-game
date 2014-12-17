@@ -196,6 +196,9 @@ var Engine = (function(global) {
         player.render();
     }
 
+    /* This function write all the texts used in the game like game over messages,
+     * player score and game speed level
+     */
     function renderTexts() {
         // center text for game status
         if (gameState === 0) {
