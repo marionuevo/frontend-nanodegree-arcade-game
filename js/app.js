@@ -22,11 +22,12 @@ var Enemy = function() {
 // x is outside the screen, on the left
 // y gets a random value from 3 possible rows
 // Speed is also variable and random between MINSPEED and MAXSPEED
+// Speed increases with player score :)
 Enemy.prototype.init = function() {
     this.x = -101;
     this.posy = Math.round(Math.random() * 2 + 2);
     this.y = this.posy * 83 - 106;
-    this.speed = (Math.random() * MAXSPEED) + MINSPEED;
+    this.speed = (Math.random() * MAXSPEED) + MINSPEED + (player.score * 100);
 }
 
 // Update the enemy's position, required method for game
