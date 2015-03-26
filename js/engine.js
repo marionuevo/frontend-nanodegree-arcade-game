@@ -88,6 +88,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        checkCollections();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -110,17 +111,30 @@ var Engine = (function(global) {
      */
     function checkCollisions() {
         // check if player felt into the water
-        if (player.y < 72) {
+        if (player.posy <= 1) {
             reset();
         }
         // check for collisions
         for (enemy in allEnemies) {
-            if (Math.abs((allEnemies[enemy].x - player.x)) < 80 && 
-                Math.abs((allEnemies[enemy].y - player.y)) < 20) {
+            if (allEnemies[enemy].posy === player.posy &&
+                Math.abs((allEnemies[enemy].x - player.x)) < 80) {
                 // crash
                 reset();
             }
         }
+    }
+
+    /* This is used to check whether a player find a gem in the tile
+     * where the player arrives. If true, add points to the player
+     */
+    function checkCollections() {
+        allGems.forEach(function(gem) {
+            if (gem.posx === player.posx && gem.posy === player.posy) {
+                //there is a gem here. did you found it sooner?
+                 player.score ++;
+                 gem.init();
+            } 
+        });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -173,13 +187,20 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+        allGems.forEach(function(gem) {
+            gem.render();
+        });
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
         player.render();
     }
 
+    /* This function write all the texts used in the game like game over messages,
+     * player score and game speed level
+     */
     function renderTexts() {
+        // center text for game status
         if (gameState === 0) {
             ctx.strokeText('GAME OVER', CANVASWIDTH/2, CANVASHEIGTH/2);
             ctx.fillText('GAME OVER', CANVASWIDTH/2, CANVASHEIGTH/2);
@@ -188,7 +209,18 @@ var Engine = (function(global) {
             ctx.strokeText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
             ctx.fillText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
         }
-
+        // top text for player score and speed
+        ctx.save();
+        ctx.font = '30px Impact';
+        ctx.textAlign = 'left';
+        ctx.lineWidth = 2;
+        ctx.clearRect(0, 0, CANVASWIDTH, 50);
+        ctx.strokeText('Player Score: ' + player.score, 0, 45);
+        ctx.fillText('Player Score: ' + player.score, 0, 45);
+        ctx.textAlign = 'right';
+        ctx.strokeText('Speed: ' + (Math.floor (player.score/10)), CANVASWIDTH, 45);
+        ctx.fillText('Speed: ' + (Math.floor (player.score/10)), CANVASWIDTH, 45);
+        ctx.restore();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -209,6 +241,9 @@ var Engine = (function(global) {
                 gameState = 2;
             }, 2000);
             player.init();
+            allGems.forEach(function(gem) {
+                gem.init();
+            });
         }
     }
 
@@ -221,7 +256,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Key.png'
     ]);
     Resources.onReady(init);
 

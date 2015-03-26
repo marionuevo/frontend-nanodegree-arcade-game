@@ -22,10 +22,12 @@ var Enemy = function() {
 // x is outside the screen, on the left
 // y gets a random value from 3 possible rows
 // Speed is also variable and random between MINSPEED and MAXSPEED
+// Speed increases with player score :) by a factor of 10
 Enemy.prototype.init = function() {
     this.x = -101;
-    this.y = 60 + (Math.round(Math.random() * 2) * 83);
-    this.speed = (Math.random() * MAXSPEED) + MINSPEED;
+    this.posy = Math.round(Math.random() * 2 + 2);
+    this.y = this.posy * 83 - 106;
+    this.speed = (Math.random() * MAXSPEED) + MINSPEED + (Math.floor (player.score/10) * 10);
 }
 
 // Update the enemy's position, required method for game
@@ -54,14 +56,18 @@ var Player = function () {
     this.init();
 }
 
+// Converts player discrete grid position to 
+// screen coordinates "analog" position
 Player.prototype.update = function() {
-    // not used
+    this.x = this.posx * 101 - 101;
+    this.y = this.posy * 83 - 92;
 }
 
-// Gives player initial coordinates
+// Gives player initial coordinates and score
 Player.prototype.init = function() {
-    this.x = (CANVASWIDTH - 101)/ 2;
-    this.y = CANVASHEIGTH - 101 * 2; // 2 cells
+    this.posx = 3;
+    this.posy = 6;
+    this.score = 0;
 }
 
 // Draw player character
@@ -71,26 +77,46 @@ Player.prototype.render = function() {
     }
 }
 
-// Read keystrokes from keyboard
+// Process keystrokes
 Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
-            if (this.x > 0)
-                this.x = this.x - 101;
+            if (this.posx > 1)
+                this.posx--;
             break;
         case 'up':
-            if (this.y > -11)
-                this.y = this.y - 83;
+            if (this.posy > 1)
+                this.posy--;
             break;
         case 'right':
-            if (this.x < 404)
-                this.x = this.x + 101;
+            if (this.posx < 5)
+                this.posx++;
             break;
         case 'down':
-            if (this.y < 404)
-                this.y = this.y + 83;
+            if (this.posy < 6)
+                this.posy++;
             break;
     }
+}
+
+// Gem is the object that store gems position. Player must recollect them
+// to get more points.
+var Gem = function ()  {
+    this.sprite = 'images/Key.png';
+    this.init();
+}
+
+// Give gems inital position plus a random offset in x
+// This offset allow to see where there are two or more gems
+Gem.prototype.init = function() {
+    this.posx = Math.round(Math.random() * 4 + 1);
+    this.posy = Math.round(Math.random() * 2 + 2);
+    this.x = this.posx * 101 - 110 + Math.random() * 20;
+    this.y = this.posy * 83 - 90;
+}
+
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 // Now instantiate your objects.
@@ -98,6 +124,7 @@ Player.prototype.handleInput = function(key) {
 // Place the player object in a variable called player
 var player = new Player();
 var allEnemies = [new Enemy(), new Enemy(), new Enemy()];
+var allGems = [new Gem(), new Gem(), new Gem()];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
