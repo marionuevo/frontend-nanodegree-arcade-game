@@ -25,8 +25,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = CANVASWIDTH;
-    canvas.height = CANVASHEIGTH;
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGTH;
     doc.body.appendChild(canvas);
 
     // Set global font rendering style
@@ -62,9 +62,9 @@ var Engine = (function(global) {
 
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
-         */ 
+         */
         win.requestAnimationFrame(main);
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -102,7 +102,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update(); 
+        player.update();
     }
 
     /* This is used to check collision between the player and all the
@@ -118,9 +118,9 @@ var Engine = (function(global) {
         for (enemy in allEnemies) {
             if (allEnemies[enemy].posy === player.posy &&
                 Math.abs((allEnemies[enemy].x - player.x)) < 80) {
-                // crash
-                reset();
-            }
+                    // crash
+                    reset();
+                }
         }
     }
 
@@ -133,7 +133,7 @@ var Engine = (function(global) {
                 //there is a gem here. did you found it sooner?
                  player.score ++;
                  gem.init();
-            } 
+            }
         });
     }
 
@@ -202,24 +202,24 @@ var Engine = (function(global) {
     function renderTexts() {
         // center text for game status
         if (gameState === 0) {
-            ctx.strokeText('GAME OVER', CANVASWIDTH/2, CANVASHEIGTH/2);
-            ctx.fillText('GAME OVER', CANVASWIDTH/2, CANVASHEIGTH/2);
-        };
+            ctx.strokeText('GAME OVER', CANVAS_WIDTH/2, CANVAS_HEIGTH/2);
+            ctx.fillText('GAME OVER', CANVAS_WIDTH/2, CANVAS_HEIGTH/2);
+        }
         if (gameState === 1) {
-            ctx.strokeText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
-            ctx.fillText('READY?', CANVASWIDTH/2, CANVASHEIGTH/2);
+            ctx.strokeText('READY?', CANVAS_WIDTH/2, CANVAS_HEIGTH/2);
+            ctx.fillText('READY?', CANVAS_WIDTH/2, CANVAS_HEIGTH/2);
         }
         // top text for player score and speed
         ctx.save();
         ctx.font = '30px Impact';
         ctx.textAlign = 'left';
         ctx.lineWidth = 2;
-        ctx.clearRect(0, 0, CANVASWIDTH, 50);
+        ctx.clearRect(0, 0, CANVAS_WIDTH, 50);
         ctx.strokeText('Player Score: ' + player.score, 0, 45);
         ctx.fillText('Player Score: ' + player.score, 0, 45);
         ctx.textAlign = 'right';
-        ctx.strokeText('Speed: ' + (Math.floor (player.score/10)), CANVASWIDTH, 45);
-        ctx.fillText('Speed: ' + (Math.floor (player.score/10)), CANVASWIDTH, 45);
+        ctx.strokeText('Speed: ' + (Math.floor (player.score/10)), CANVAS_WIDTH, 45);
+        ctx.fillText('Speed: ' + (Math.floor (player.score/10)), CANVAS_WIDTH, 45);
         ctx.restore();
     }
 
